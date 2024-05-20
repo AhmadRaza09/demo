@@ -1,0 +1,4 @@
+FROM mariadb:10.6.14
+ENV MYSQL_ROOT_PASSWORD=magnus11
+EXPOSE 3307
+CMD ["mysqld"]

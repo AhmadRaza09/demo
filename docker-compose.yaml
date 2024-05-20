@@ -1,0 +1,41 @@
+version: '2'
+services:
+
+    dbd:
+      image: db:demo
+      ports:
+       - "3307:3306"
+      restart: always
+      volumes:
+       - db-data-demo:/var/lib/mysql
+      networks:
+        - backendd 
+        - frontendd
+    backendd:
+      image: osa-back:demo
+      ports:
+        - "9092:9092"
+      restart: always
+      depends_on:
+        - dbd
+      networks:
+        - dbd
+        - backendd
+        - frontendd
+    frontendd:
+      image: osa-front:demo
+      ports:
+        - "3001:3001"
+      depends_on:
+        - backendd
+      networks:
+        - backendd
+        - frontendd    
+
+volumes:
+  db-data-demo:
+
+networks:
+  dbd:
+  backendd:
+  frontendd:
